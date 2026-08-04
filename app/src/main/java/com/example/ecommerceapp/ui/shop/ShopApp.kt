@@ -16,8 +16,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.carousel.HorizontalCenteredHeroCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -53,6 +53,7 @@ import com.example.ecommerceapp.data.sync.CatalogSyncService
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
+import kotlinx.coroutines.delay
 import java.text.NumberFormat
 import java.util.*
 
@@ -202,7 +203,19 @@ private fun HomeScreen(
 ) {
 	val cartQuantities = uiState.cartItems.associate { it.product.id to it.quantity }
 	val featuredProducts = remember(uiState.products) { uiState.products.take(5) }
-	val pagerState = rememberPagerState(pageCount = { featuredProducts.size })
+	val carouselState = rememberCarouselState(itemCount = { featuredProducts.size })
+
+	LaunchedEffect(featuredProducts) {
+		if (featuredProducts.isNotEmpty()) {
+			while (true) {
+				delay(3000)
+				if (!carouselState.isScrollInProgress) {
+					val nextIndex = (carouselState.currentItem + 1) % featuredProducts.size
+					carouselState.animateScrollToItem(nextIndex)
+				}
+			}
+		}
+	}
 
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Fixed(2),
@@ -257,7 +270,7 @@ private fun HomeScreen(
 
 				Spacer(modifier = Modifier.height(24.dp))
 
-				// Featured Pager
+				// Featured Carousel
 				if (featuredProducts.isNotEmpty()) {
 					Text(
 						text = "Featured Collections",
@@ -265,37 +278,20 @@ private fun HomeScreen(
 						fontWeight = FontWeight.Bold,
 						modifier = Modifier.padding(bottom = 12.dp)
 					)
-					HorizontalPager(
-						state = pagerState,
+					HorizontalCenteredHeroCarousel(
+						state = carouselState,
 						modifier = Modifier
 							.fillMaxWidth()
-							.height(220.dp)
-							.clip(RoundedCornerShape(24.dp))
+							.height(260.dp),
+						maxItemWidth = 320.dp,
+						itemSpacing = 8.dp,
+						contentPadding = PaddingValues(horizontal = 16.dp)
 					) { page ->
 						FeaturedCard(
 							product = featuredProducts[page],
-							onClick = { onProductClick(featuredProducts[page]) }
+							onClick = { onProductClick(featuredProducts[page]) },
+							modifier = Modifier.maskClip(MaterialTheme.shapes.extraLarge)
 						)
-					}
-					
-					Spacer(modifier = Modifier.height(8.dp))
-					
-					Row(
-						Modifier
-							.height(16.dp)
-							.fillMaxWidth(),
-						horizontalArrangement = Arrangement.Center
-					) {
-						repeat(featuredProducts.size) { iteration ->
-							val color = if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
-							Box(
-								modifier = Modifier
-									.padding(2.dp)
-									.clip(CircleShape)
-									.background(color)
-									.size(if (pagerState.currentPage == iteration) 8.dp else 6.dp)
-							)
-						}
 					}
 				}
 
@@ -521,10 +517,11 @@ private fun ProductCard(
 @Composable
 private fun FeaturedCard(
 	product: Product,
-	onClick: () -> Unit
+	onClick: () -> Unit,
+	modifier: Modifier = Modifier
 ) {
 	Box(
-		modifier = Modifier
+		modifier = modifier
 			.fillMaxSize()
 			.clickable(onClick = onClick)
 	) {
