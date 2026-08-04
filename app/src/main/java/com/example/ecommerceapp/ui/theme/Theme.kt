@@ -9,37 +9,60 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-	primary = Olive80,
-	secondary = Sand80,
-	tertiary = Coral80,
-	background = Color(0xFF0F1115),
-	surface = Color(0xFF151A22),
-	surfaceVariant = Color(0xFF202837),
-	onPrimary = Color(0xFF04211E),
-	onSecondary = Color(0xFF2A1800),
-	onTertiary = Color(0xFF361106)
+	primary = PrimaryDark,
+	onPrimary = OnPrimaryDark,
+	primaryContainer = PrimaryContainerDark,
+	onPrimaryContainer = OnPrimaryContainerDark,
+	secondary = SecondaryDark,
+	onSecondary = OnSecondaryDark,
+	secondaryContainer = SecondaryContainerDark,
+	onSecondaryContainer = OnSecondaryContainerDark,
+	tertiary = TertiaryDark,
+	onTertiary = OnTertiaryDark,
+	tertiaryContainer = TertiaryContainerDark,
+	onTertiaryContainer = OnTertiaryContainerDark,
+	background = BackgroundDark,
+	onBackground = OnBackgroundDark,
+	surface = SurfaceDark,
+	onSurface = OnSurfaceDark,
+	surfaceVariant = SurfaceVariantDark,
+	onSurfaceVariant = OnSurfaceVariantDark,
+	outline = OutlineDark
 )
 
 private val LightColorScheme = lightColorScheme(
-	primary = Olive40,
-	secondary = Sand40,
-	tertiary = Coral40,
-	background = Color(0xFFF7F3EC),
-	surface = Color(0xFFFFFBF6),
-	surfaceVariant = Color(0xFFE8E2D8),
-	onPrimary = Color.White,
-	onSecondary = Color.White,
-	onTertiary = Color.White
+	primary = PrimaryLight,
+	onPrimary = OnPrimaryLight,
+	primaryContainer = PrimaryContainerLight,
+	onPrimaryContainer = OnPrimaryContainerLight,
+	secondary = SecondaryLight,
+	onSecondary = OnSecondaryLight,
+	secondaryContainer = SecondaryContainerLight,
+	onSecondaryContainer = OnSecondaryContainerLight,
+	tertiary = TertiaryLight,
+	onTertiary = OnTertiaryLight,
+	tertiaryContainer = TertiaryContainerLight,
+	onTertiaryContainer = OnTertiaryContainerLight,
+	background = BackgroundLight,
+	onBackground = OnBackgroundLight,
+	surface = SurfaceLight,
+	onSurface = OnSurfaceLight,
+	surfaceVariant = SurfaceVariantLight,
+	onSurfaceVariant = OnSurfaceVariantLight,
+	outline = OutlineLight
 )
 
 @Composable
 fun ECommerceAppTheme(
 	darkTheme: Boolean = isSystemInDarkTheme(),
-	dynamicColor: Boolean = false,
+	dynamicColor: Boolean = true, // Enabled by default
 	content: @Composable () -> Unit
 ) {
 	val colorScheme = when {
@@ -47,9 +70,19 @@ fun ECommerceAppTheme(
 			val context = LocalContext.current
 			if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
 		}
-
 		darkTheme -> DarkColorScheme
 		else -> LightColorScheme
+	}
+
+	val view = LocalView.current
+	if (!view.isInEditMode) {
+		SideEffect {
+			val window = (view.context as Activity).window
+			window.statusBarColor = colorScheme.surface.toArgb()
+			window.navigationBarColor = colorScheme.surface.toArgb()
+			WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+			WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
+		}
 	}
 
 	MaterialTheme(
