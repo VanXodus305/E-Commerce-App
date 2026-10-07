@@ -1,0 +1,2182 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Android Static Agent",
+          "rules": [
+            {
+              "id": "RemoveWorkManagerInitializer",
+              "name": "Android Lint finding",
+              "shortDescription": {
+                "text": "Android Lint finding"
+              }
+            },
+            {
+              "id": "ANDROID-SEC-001",
+              "name": "Cleartext HTTP URL",
+              "shortDescription": {
+                "text": "Cleartext HTTP URL"
+              }
+            },
+            {
+              "id": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "name": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+              "shortDescription": {
+                "text": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag"
+              }
+            },
+            {
+              "id": "gcp-api-key",
+              "name": "gcp-api-key has detected secret for file app/build.gradle.kts at commit df446a008088f94132ad4a97fd58c2ed7f687ee4.",
+              "shortDescription": {
+                "text": "gcp-api-key has detected secret for file app/build.gradle.kts at commit df446a008088f94132ad4a97fd58c2ed7f687ee4."
+              }
+            },
+            {
+              "id": "java.android.security.exported_activity.exported_activity",
+              "name": "java.android.security.exported_activity.exported_activity",
+              "shortDescription": {
+                "text": "java.android.security.exported_activity.exported_activity"
+              }
+            },
+            {
+              "id": "RedundantLabel",
+              "name": "Android Lint finding",
+              "shortDescription": {
+                "text": "Android Lint finding"
+              }
+            },
+            {
+              "id": "ANDROID-QUALITY-001",
+              "name": "Logging call requires review",
+              "shortDescription": {
+                "text": "Logging call requires review"
+              }
+            },
+            {
+              "id": "ANDROID-QUALITY-003",
+              "name": "Potential unused local variable",
+              "shortDescription": {
+                "text": "Potential unused local variable"
+              }
+            },
+            {
+              "id": "UnusedResources",
+              "name": "Android Lint finding",
+              "shortDescription": {
+                "text": "Android Lint finding"
+              }
+            },
+            {
+              "id": "GradleDependency",
+              "name": "Android Lint finding",
+              "shortDescription": {
+                "text": "Android Lint finding"
+              }
+            },
+            {
+              "id": "AndroidGradlePluginVersion",
+              "name": "Android Lint finding",
+              "shortDescription": {
+                "text": "Android Lint finding"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "RemoveWorkManagerInitializer",
+          "level": "error",
+          "message": {
+            "text": "Android Lint points to androidx.work.WorkManagerInitializer in the manifest file at line 7, indicating it should be removed when using on-demand initialization."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/AndroidManifest.xml"
+                },
+                "region": {
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The manifest references WorkManagerInitializer requiring manual removal for on-demand initialization.",
+            "remediation": "If an `android.app.Application` implements `androidx.work.Configuration.Provider`,\nthe default `androidx.startup.InitializationProvider` needs to be removed from the\nAndroidManifest.xml file."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "RemoveWorkManagerInitializer:app/src/main/AndroidManifest.xml:7"
+          }
+        },
+        {
+          "ruleId": "ANDROID-SEC-001",
+          "level": "error",
+          "message": {
+            "text": "The cleartext URL occurs in an instrumentation test file inside a comment/documentation reference pointing to testing documentation, which is a non-production test case."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/androidTest/java/com/example/ecommerceapp/ExampleInstrumentedTest.kt"
+                },
+                "region": {
+                  "startLine": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "likely_false_positive",
+            "triage_reason": "The finding is located in an androidTest file and references a documentation link.",
+            "remediation": "Replace the endpoint with HTTPS. If HTTP is required for local development, put it in a debug-only configuration and document the exception."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-SEC-001:app/src/androidTest/java/com/example/ecommerceapp/ExampleInstrumentedTest.kt:14"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 17 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 17
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:17"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 21 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:21"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 26 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:26"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 33 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:33"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 41 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:41"
+          }
+        },
+        {
+          "ruleId": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+          "level": "warning",
+          "message": {
+            "text": "Static analysis indicates that line 46 of the GitHub Actions workflow uses a mutable reference instead of a pinned commit SHA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/android-static-analysis.yml"
+                },
+                "region": {
+                  "startLine": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The workflow step uses a mutable action reference.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag:.github/workflows/android-static-analysis.yml:46"
+          }
+        },
+        {
+          "ruleId": "gcp-api-key",
+          "level": "warning",
+          "message": {
+            "text": "Secret detection identified a potential GCP API key in app/build.gradle.kts at line 47."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/build.gradle.kts"
+                },
+                "region": {
+                  "startLine": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "gitleaks+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A potential GCP API key secret has been detected in build configuration.",
+            "remediation": "Review the external analyzer documentation and remediate the finding."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "gcp-api-key:app/build.gradle.kts:47"
+          }
+        },
+        {
+          "ruleId": "java.android.security.exported_activity.exported_activity",
+          "level": "warning",
+          "message": {
+            "text": "Line 17 of AndroidManifest.xml marks an activity as exported, allowing other applications on the device to launch it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/AndroidManifest.xml"
+                },
+                "region": {
+                  "startLine": 17
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Semgrep+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "The manifest exports an activity which can be accessed by other applications.",
+            "remediation": "Review the Semgrep rule and remediate the issue."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "java.android.security.exported_activity.exported_activity:app/src/main/AndroidManifest.xml:17"
+          }
+        },
+        {
+          "ruleId": "RedundantLabel",
+          "level": "warning",
+          "message": {
+            "text": "Line 20 of AndroidManifest.xml contains a redundant label that can be safely removed."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/AndroidManifest.xml"
+                },
+                "region": {
+                  "startLine": 20
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint detected a redundant label in the manifest.",
+            "remediation": "When an activity does not have a label attribute, it will use the one from the application tag. Since the application has already specified the same label, the label on this activity can be omitted."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "RedundantLabel:app/src/main/AndroidManifest.xml:20"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 19 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:19"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 33 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:33"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 38 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:38"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 42 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:42"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 47 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:47"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 52 of MainActivity.kt contains a Log.d call which logs lifecycle events in production code."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/MainActivity.kt"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/MainActivity.kt:52"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 58 of DefaultShopRepository.kt contains a Log.d call recording catalog refresh information."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/data/repository/DefaultShopRepository.kt"
+                },
+                "region": {
+                  "startLine": 58
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production repository code contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/data/repository/DefaultShopRepository.kt:58"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 61 of DefaultShopRepository.kt contains a Log.w call recording refresh failures."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/data/repository/DefaultShopRepository.kt"
+                },
+                "region": {
+                  "startLine": 61
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production repository code contains a warning logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/data/repository/DefaultShopRepository.kt:61"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-001",
+          "level": "warning",
+          "message": {
+            "text": "Line 24 of CatalogSyncService.kt contains a Log.d call indicating service refresh started."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/data/sync/CatalogSyncService.kt"
+                },
+                "region": {
+                  "startLine": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Production sync service contains a debug logging call.",
+            "remediation": "Remove the log, redact sensitive values, or guard it behind a debug-only build configuration."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-001:app/src/main/java/com/example/ecommerceapp/data/sync/CatalogSyncService.kt:24"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 601 of ShopApp.kt assigns contentAlignment inside a Box modifier that may be unreferenced."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/shop/ShopApp.kt"
+                },
+                "region": {
+                  "startLine": 601
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A variable or parameter assignment is identified as potentially unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/shop/ShopApp.kt:601"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 614 of ShopApp.kt assigns key in items list generation."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/shop/ShopApp.kt"
+                },
+                "region": {
+                  "startLine": 614
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A variable or parameter assignment is identified as potentially unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/shop/ShopApp.kt:614"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 63 of ShopViewModel.kt assigns ignoreCase in description contains evaluation."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/shop/ShopViewModel.kt"
+                },
+                "region": {
+                  "startLine": 63
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A variable or parameter assignment is identified as potentially unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/shop/ShopViewModel.kt:63"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 6 of Color.kt defines PrimaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:6"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 7 of Color.kt defines OnPrimaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:7"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 8 of Color.kt defines PrimaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:8"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 9 of Color.kt defines OnPrimaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:9"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 11 of Color.kt defines SecondaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:11"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 12 of Color.kt defines OnSecondaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 12
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:12"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 13 of Color.kt defines SecondaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 13
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:13"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 14 of Color.kt defines OnSecondaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:14"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 16 of Color.kt defines TertiaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 16
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:16"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 17 of Color.kt defines OnTertiaryLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 17
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:17"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 18 of Color.kt defines TertiaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 18
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:18"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 19 of Color.kt defines OnTertiaryContainerLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:19"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 21 of Color.kt defines BackgroundLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 21
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:21"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 22 of Color.kt defines OnBackgroundLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:22"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 23 of Color.kt defines SurfaceLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:23"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 24 of Color.kt defines OnSurfaceLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:24"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 25 of Color.kt defines SurfaceVariantLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:25"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 26 of Color.kt defines OnSurfaceVariantLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:26"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 27 of Color.kt defines OutlineLight which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:27"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 30 of Color.kt defines PrimaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:30"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 31 of Color.kt defines OnPrimaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:31"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 32 of Color.kt defines PrimaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:32"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 33 of Color.kt defines OnPrimaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:33"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 35 of Color.kt defines SecondaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:35"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 36 of Color.kt defines OnSecondaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:36"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 37 of Color.kt defines SecondaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:37"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 38 of Color.kt defines OnSecondaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:38"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 40 of Color.kt defines TertiaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:40"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 41 of Color.kt defines OnTertiaryDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:41"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 42 of Color.kt defines TertiaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:42"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 43 of Color.kt defines OnTertiaryContainerDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:43"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 45 of Color.kt defines BackgroundDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:45"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 46 of Color.kt defines OnBackgroundDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:46"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 47 of Color.kt defines SurfaceDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:47"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 48 of Color.kt defines OnSurfaceDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:48"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 49 of Color.kt defines SurfaceVariantDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:49"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 50 of Color.kt defines OnSurfaceVariantDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 50
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:50"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 51 of Color.kt defines OutlineDark which is flagged as an unused local variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt"
+                },
+                "region": {
+                  "startLine": 51
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A color theme variable is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Color.kt:51"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 65 of Theme.kt defines dynamicColor parameter which is flagged as unreferenced."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Theme.kt"
+                },
+                "region": {
+                  "startLine": 65
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A parameter assignment is flagged as potentially unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Theme.kt:65"
+          }
+        },
+        {
+          "ruleId": "ANDROID-QUALITY-003",
+          "level": "warning",
+          "message": {
+            "text": "Line 9 of Type.kt defines Typography which is flagged as an unused variable."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/java/com/example/ecommerceapp/ui/theme/Type.kt"
+                },
+                "region": {
+                  "startLine": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "built-in+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "A typography definition is reported as unused.",
+            "remediation": "Remove it, use it, or suppress this finding when a framework accesses it indirectly."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "ANDROID-QUALITY-003:app/src/main/java/com/example/ecommerceapp/ui/theme/Type.kt:9"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 3 of colors.xml defines R.color.purple_200 which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:3"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 4 of colors.xml defines R.color.purple_500 which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:4"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 5 of colors.xml defines R.color.purple_700 which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:5"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 6 of colors.xml defines R.color.teal_200 which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:6"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 7 of colors.xml defines R.color.teal_700 which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:7"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 8 of colors.xml defines R.color.black which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:8"
+          }
+        },
+        {
+          "ruleId": "UnusedResources",
+          "level": "warning",
+          "message": {
+            "text": "Line 9 of colors.xml defines R.color.white which is flagged as unused."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app/src/main/res/values/colors.xml"
+                },
+                "region": {
+                  "startLine": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint reports the color resource is unused.",
+            "remediation": "Unused resources make applications larger and slow down builds.\n\n\nThe unused resource check can ignore tests. If you want to include resources that are only referenced from tests, consider packaging them in a test source set instead.\n\nYou can include test sources in the unused resource check by setting the system property `lint.unused-resources.include-tests=true`, and to exclude them (usually for performance reasons), use `lint.unused-resources.exclude-tests=true`.\n"
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "UnusedResources:app/src/main/res/values/colors.xml:9"
+          }
+        },
+        {
+          "ruleId": "GradleDependency",
+          "level": "warning",
+          "message": {
+            "text": "Line 6 of gradle/libs.versions.toml indicates a newer version of dev.chrisbanes.haze:haze is available."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "gradle/libs.versions.toml"
+                },
+                "region": {
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint notes a newer dependency version is available.",
+            "remediation": "This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "GradleDependency:gradle/libs.versions.toml:6"
+          }
+        },
+        {
+          "ruleId": "AndroidGradlePluginVersion",
+          "level": "warning",
+          "message": {
+            "text": "Line 3 of gradle/wrapper/gradle-wrapper.properties indicates a newer version of Gradle is available."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "gradle/wrapper/gradle-wrapper.properties"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "properties": {
+            "source_tool": "Android Lint+Gemini",
+            "confidence": "high",
+            "triage_status": "confirmed",
+            "triage_reason": "Android Lint notes a newer Gradle version is available.",
+            "remediation": "This detector looks for usage of the Android Gradle Plugin where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+          },
+          "partialFingerprints": {
+            "androidStaticAgent": "AndroidGradlePluginVersion:gradle/wrapper/gradle-wrapper.properties:3"
+          }
+        }
+      ]
+    }
+  ]
+}
