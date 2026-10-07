@@ -44,6 +44,8 @@ kotlin {
 	jvmToolchain(17)
 }
 
+//AIzaSyAGeXQqDxrvkoo5vfVyIgpnq4I1BIHn8AU
+
 dependencies {
 	implementation(platform(libs.androidx.compose.bom))
 	implementation(libs.androidx.activity.compose)

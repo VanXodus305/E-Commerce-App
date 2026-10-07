@@ -51,8 +51,9 @@ import com.example.ecommerceapp.data.model.Product
 import com.example.ecommerceapp.data.model.SortMode
 import com.example.ecommerceapp.data.sync.CatalogSyncService
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.delay
 import java.text.NumberFormat
 import java.util.*
@@ -69,7 +70,7 @@ private enum class ShopDestination(val route: String, val title: String, val ico
 fun ShopApp(viewModel: ShopViewModel = hiltViewModel()) {
 	val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 	val navController = rememberNavController()
-	val hazeState = remember { HazeState() }
+	val hazeState = rememberHazeState()
 
 	LaunchedEffect(Unit) {
 		viewModel.clearMessage()
@@ -85,7 +86,7 @@ fun ShopApp(viewModel: ShopViewModel = hiltViewModel()) {
 			if (currentRoute != ShopDestination.Detail.route) {
 				NavigationBar(
 					modifier = Modifier
-						.hazeChild(state = hazeState)
+						.hazeEffect(state = hazeState)
 						.clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)),
 					containerColor = Color.Transparent,
 					tonalElevation = 0.dp
@@ -131,7 +132,7 @@ fun ShopApp(viewModel: ShopViewModel = hiltViewModel()) {
 		Surface(
 			modifier = Modifier
 				.fillMaxSize()
-				.haze(hazeState)
+				.hazeSource(state = hazeState)
 		) {
 			NavHost(
 				navController = navController,
