@@ -20,6 +20,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle
+            **/*.gradle.kts
+            **/gradle-wrapper.properties
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -27,17 +32,32 @@ jobs:
         with:
           go-version: '1.24.x'
           cache: false
-      - name: Install Semgrep
-        run: python -m pip install semgrep
-      - name: Install Gitleaks
+      - name: Restore analysis tool cache
+        id: analysis-tools-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: .android-static-agent-tools
+          key: ${{ runner.os }}-android-static-agent-tools-v1-${{ hashFiles('.github/workflows/android-static-analysis.yml') }}
+      - name: Install missing analysis tools
         run: |
-          export GOBIN="$RUNNER_TEMP/bin"
-          go install github.com/zricethezav/gitleaks/v8@v8.30.1
-          echo "$GOBIN" >> "$GITHUB_PATH"
+          tools_dir="$GITHUB_WORKSPACE/.android-static-agent-tools"
+          if [ ! -x "$tools_dir/venv/bin/python" ]; then
+            python -m venv "$tools_dir/venv"
+          fi
+          if [ ! -x "$tools_dir/venv/bin/semgrep" ]; then
+            "$tools_dir/venv/bin/python" -m pip install semgrep
+          fi
+          if [ ! -x "$tools_dir/bin/gitleaks" ]; then
+            mkdir -p "$tools_dir/bin"
+            export GOBIN="$tools_dir/bin"
+            go install github.com/zricethezav/gitleaks/v8@v8.30.1
+          fi
+          echo "$tools_dir/venv/bin" >> "$GITHUB_PATH"
+          echo "$tools_dir/bin" >> "$GITHUB_PATH"
       - name: Run Android static analysis
         id: analysis
         continue-on-error: true
-        uses: kundu-soumyadeep/static-analysis-agent@v1.4.0
+        uses: philips-internal/static-analysis-agent@v1.5.0
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         with:
@@ -45,6 +65,13 @@ jobs:
           run-tools: 'true'
           changed-only: 'true'
           gemini-model: gemini-3.5-flash-lite
+          python-command: ${{ github.workspace }}/.android-static-agent-tools/venv/bin/python
+      - name: Save analysis tool cache
+        if: always() && steps.analysis-tools-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: .android-static-agent-tools
+          key: ${{ steps.analysis-tools-cache.outputs.cache-primary-key }}
       - name: Publish pull-request summary
         if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
         uses: actions/github-script@v8
