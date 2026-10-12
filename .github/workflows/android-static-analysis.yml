@@ -37,7 +37,7 @@ jobs:
       - name: Run Android static analysis
         id: analysis
         continue-on-error: true
-        uses: kundu-soumyadeep/static-analysis-agent@v1.2.0
+        uses: kundu-soumyadeep/static-analysis-agent@v1.3.0
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         with:
